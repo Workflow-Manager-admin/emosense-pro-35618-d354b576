@@ -1,36 +1,76 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { AppStateProvider } from "./context/AppStateContext";
+import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./screens/Dashboard";
+import Mood from "./screens/Mood";
+import Journal from "./screens/Journal";
+import Trends from "./screens/Trends";
+import Recommendations from "./screens/Recommendations";
+import ExportScreen from "./screens/Export";
+import SettingsScreen from "./screens/Settings";
+import LoginScreen from "./screens/Login";
+import RegisterScreen from "./screens/Register";
+import Upgrade from "./screens/Upgrade";
+import { Toaster } from "react-hot-toast";
+import "./App.css";
 
 function App() {
   return (
-    <div className="app">
-      <nav className="navbar">
-        <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <div className="logo">
-              <span className="logo-symbol">*</span> KAVIA AI
-            </div>
-            <button className="btn">Template Button</button>
-          </div>
-        </div>
-      </nav>
-
-      <main>
-        <div className="container">
-          <div className="hero">
-            <div className="subtitle">AI Workflow Manager Template</div>
-            
-            <h1 className="title">emospense_pro_frontend</h1>
-            
-            <div className="description">
-              Start building your application.
-            </div>
-            
-            <button className="btn btn-large">Button</button>
-          </div>
-        </div>
-      </main>
-    </div>
+    <AuthProvider>
+      <AppStateProvider>
+        <Router>
+          <Toaster position="top-center" />
+          <Routes>
+            <Route
+              path="/login"
+              element={<LoginScreen />}
+            />
+            <Route
+              path="/register"
+              element={<RegisterScreen />}
+            />
+            <Route
+              path="/upgrade"
+              element={
+                <ProtectedRoute>
+                  <Upgrade />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/*"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Routes>
+                      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/mood" element={<Mood />} />
+                      <Route path="/journal" element={<Journal />} />
+                      <Route path="/trends" element={<Trends />} />
+                      <Route path="/recommendations" element={<Recommendations />} />
+                      <Route path="/settings" element={<SettingsScreen />} />
+                      <Route
+                        path="/export"
+                        element={
+                          <ProtectedRoute premiumOnly>
+                            <ExportScreen />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route path="*" element={<div className="p-8">404 Not Found</div>} />
+                    </Routes>
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </AppStateProvider>
+    </AuthProvider>
   );
 }
 
