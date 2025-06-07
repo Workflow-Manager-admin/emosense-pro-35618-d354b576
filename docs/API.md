@@ -8,6 +8,8 @@
 - **Login:** `POST /api/auth/login`
   - body: `{ email, password }`
   - response: `{ token, user }`
+
+> **Demo Login:** Use email **123@demo.com** and password **123** to log into the demo account.
 - **Google OAuth:** `POST /api/auth/oauth/google`
   - Use Firebase/Auth0 (handled client-side), server endpoint is stub only.
 

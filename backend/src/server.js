@@ -17,6 +17,11 @@ dotenv.config();
 
 const app = express();
 
+// Seed demo user in development if .env DEMO_USER_ON_BOOT is set or always during development for demo
+if (process.env.NODE_ENV !== "production") {
+  import("./seedDemoUser.js").then(mod => mod.default && mod.default()).catch(() => {});
+}
+
 app.use(cors());
 app.use(bodyParser.json({ limit: "2mb" }));
 app.use(morgan("dev"));
