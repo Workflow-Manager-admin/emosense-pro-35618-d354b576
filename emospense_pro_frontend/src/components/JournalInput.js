@@ -36,15 +36,37 @@ export default function JournalInput() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-xl">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 max-w-xl glass-panel luxury-card-shadow p-4"
+      style={{
+        background: "var(--card-glass-heavy)",
+        borderRadius: 20,
+      }}
+    >
       <textarea
-        className="w-full border rounded p-2 bg-white"
+        className="w-full p-3 rounded-xl shadow-sm focus:shadow-lg transition glass-panel bg-white/20"
+        style={{
+          border: "1.5px solid var(--glass-border)",
+          background: "rgba(255,255,255,0.13)",
+          fontFamily: "var(--upscale-font)",
+          color: "var(--text-color)",
+        }}
         placeholder="Write your thoughts..."
         rows={5}
         value={content}
         onChange={e => setContent(e.target.value)}
       />
-      <button className="btn btn-large" type="submit" disabled={loading}>
+      <button
+        className="btn btn-large"
+        type="submit"
+        disabled={loading}
+        style={{
+          fontWeight: 700,
+          boxShadow:
+            "0 3px 16px 0 #ffd70066, 0 1.4px 10px 0 #a384f5aa, var(--shadow)",
+        }}
+      >
         {loading ? "Saving..." : "Save Entry"}
       </button>
     </form>
