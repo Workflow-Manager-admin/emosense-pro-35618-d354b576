@@ -11,11 +11,12 @@ import Trends from "./screens/Trends";
 import Recommendations from "./screens/Recommendations";
 import ExportScreen from "./screens/Export";
 import SettingsScreen from "./screens/Settings";
-import LoginScreen from "./screens/Login";
-import RegisterScreen from "./screens/Register";
 import Upgrade from "./screens/Upgrade";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
+
+// Remove Login and Register screens/routes.
+// All users are considered "logged in" for demo mode.
 
 function App() {
   return (
@@ -24,14 +25,6 @@ function App() {
         <Router>
           <Toaster position="top-center" />
           <Routes>
-            <Route
-              path="/login"
-              element={<LoginScreen />}
-            />
-            <Route
-              path="/register"
-              element={<RegisterScreen />}
-            />
             <Route
               path="/upgrade"
               element={

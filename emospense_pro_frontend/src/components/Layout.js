@@ -105,21 +105,7 @@ export default function Layout({ children }) {
               </span>
             )}
           </div>
-          <button
-            className="btn btn-small mt-3 text-xs px-3"
-            style={{
-              background: "rgba(255,255,255,0.30)",
-              color: "#664400",
-              borderRadius: 16,
-              fontWeight: 600,
-              fontFamily: "var(--upscale-font)",
-              letterSpacing: "0.02em",
-              minWidth: 77,
-            }}
-            onClick={logout}
-          >
-            Logout
-          </button>
+          {/* No logout button – always logged in (demo mode) */}
         </div>
       </aside>
       {/* Mobile top bar */}

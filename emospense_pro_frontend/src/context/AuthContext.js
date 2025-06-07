@@ -1,6 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import jwt_decode from "jwt-decode";
-import { AuthAPI } from "../api/client";
 
 // PUBLIC_INTERFACE
 const AuthContext = createContext();
@@ -9,54 +7,45 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+// Demo default user: mimic the seeded user from backend for "auth-free" demo mode
+const DEMO_USER = {
+  email: "123@demo.com",
+  name: "Demo User",
+  role: "premium",
+};
+
 const initial = { user: null, token: null, loading: true };
 
 // PUBLIC_INTERFACE
 export function AuthProvider({ children }) {
   const [state, setState] = useState(initial);
 
-  // Load user from local storage/token on startup
+  // Auto-login as demo user on startup (skip real auth)
   useEffect(() => {
-    const token = localStorage.getItem("mtpro_token");
-    if (token) {
-      try {
-        const decoded = jwt_decode(token);
-        AuthAPI.getMe()
-          .then((user) => setState({ user, token, loading: false }))
-          .catch(() => {
-            setState({ ...initial, loading: false });
-            localStorage.removeItem("mtpro_token");
-          });
-      } catch {
-        setState({ ...initial, loading: false });
-      }
-    } else {
-      setState({ ...initial, loading: false });
-    }
+    setTimeout(() => {
+      setState({ user: DEMO_USER, token: "demo-token", loading: false });
+    }, 100); // simulate async load
   }, []);
 
+  // Dummy "API" for interface compatibility
   // PUBLIC_INTERFACE
   const login = async (email, password) => {
-    const d = await AuthAPI.login(email, password);
-    localStorage.setItem("mtpro_token", d.token);
-    setState({ user: d.user, token: d.token, loading: false });
+    setState({ user: DEMO_USER, token: "demo-token", loading: false });
   };
   // PUBLIC_INTERFACE
   const register = async (email, password, name) => {
-    const d = await AuthAPI.register(email, password, name);
-    localStorage.setItem("mtpro_token", d.token);
-    setState({ user: d.user, token: d.token, loading: false });
+    setState({ user: { ...DEMO_USER, name, email }, token: "demo-token", loading: false });
   };
   // PUBLIC_INTERFACE
   const logout = () => {
-    localStorage.removeItem("mtpro_token");
-    setState({ ...initial, loading: false });
+    // No-op: cannot actually "logout" in demo mode.
+    setState((prev) => ({ ...prev })); // just force rerender
   };
 
   // PUBLIC_INTERFACE
-  const isPremium = !!state.user && (state.user.role === "premium" || state.user.role === "admin");
+  const isPremium = true;
   // PUBLIC_INTERFACE
-  const isAdmin = !!state.user && state.user.role === "admin";
+  const isAdmin = false;
 
   return (
     <AuthContext.Provider value={{
