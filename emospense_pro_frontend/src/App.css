@@ -1,18 +1,39 @@
 :root {
-  --base-light: #00ffff;
-  --base-dark: #00008b;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
+  --primary: #4f46e5;
+  --secondary: #f3f4f6;
+  --accent: #f59e42;
+  --premium-gold: linear-gradient(90deg,#FFD700,#FFAC4B,#F2E477,#FFD700 90%);
+  --card-glass: rgba(255,255,255,0.15);
+  --card-glass-heavy: rgba(255,255,255,0.28);
+  --glass-border: rgba(255,255,255,0.25);
+  --shadow: 0 8px 32px 0 rgba(31,38,135,.19);
+
+  --text-color: #1a202c;
+  --text-secondary: #494559;
+  --text-light: #fff;
+
+  --upscale-font: 'Inter', 'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  background-color: var(--base-dark);
-  color: var(--text-color);
+  font-family: var(--upscale-font);
+  background: linear-gradient(135deg,#161833 0%,#282362 40%,#5d3ecd 100%);
+  min-height: 100vh;
+  color: var(--text-light);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Adds a subtle deep-glow on whole app for drama */
+  box-shadow: 0 0 130px 25px #4f46e533 inset;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
 }
 
 .app {
@@ -21,8 +42,30 @@ body {
   flex-direction: column;
 }
 
+.glass-panel {
+  backdrop-filter: blur(16px) saturate(140%);
+  background: var(--card-glass);
+  border-radius: 20px;
+  border: 1.5px solid var(--glass-border);
+  box-shadow: var(--shadow);
+}
+.glass-panel-heavy {
+  background: var(--card-glass-heavy);
+}
+
+.premium-gradient-text {
+  background: var(--premium-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.luxury-card-shadow {
+  box-shadow: 0 7px 30px 0 #ffebc966, 0 0 1px 0 #ffd70099, var(--shadow);
+}
+
 .navbar {
-  background-color: var(--base-dark);
+  background: linear-gradient(85deg,#241e41 80%,#4f46e5 130%);
   padding: 16px;
   display: flex;
   align-items: center;
@@ -87,22 +130,66 @@ body {
 }
 
 .btn {
-  background-color: var(--base-light);
-  color: white;
+  background: var(--premium-gold);
+  color: #553900;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  border-radius: 28px;
+  padding: 11px 28px;
+  font-size: 1.02rem;
   font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  font-family: var(--upscale-font);
+  box-shadow: 0 2px 10px 0 #ffd70033, 0 1px 8px 0 #4441b888;
+  transition: background 0.23s cubic-bezier(.65,.05,.36,1), box-shadow 0.18s cubic-bezier(.51,0,.37,1);
+  letter-spacing: 0.02em;
 }
-
-.btn:hover {
-  background-color: #7691ff;
+.btn:hover, .btn:focus {
+  background: linear-gradient(86deg,#ffe793 20%,#ffd700 60%,#ffba2b 100%);
+  color: #4F4200;
+  box-shadow: 0 4px 18px 0 #ffd70055;
 }
 
 .btn-large {
-  padding: 12px 24px;
-  font-size: 1.1rem;
+  padding: 13px 32px;
+  font-size: 1.15rem;
+  border-radius: 30px;
+  font-weight: 600;
+}
+
+input, textarea, select {
+  font-family: var(--upscale-font);
+  background: rgba(255,255,255,0.20);
+  border-radius: 14px;
+  padding: 11px;
+  border: 1.5px solid var(--glass-border);
+  color: var(--text-color);
+  backdrop-filter: blur(2px);
+  font-size: 1.08rem;
+  transition: border-color 0.13s;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #a384f5;
+  background: rgba(255,255,255,0.35);
+}
+
+.container, .max-w-xl, .max-w-2xl, .max-w-3xl {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.title, h1, h2, h3 {
+  font-family: var(--upscale-font);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title {
+  font-size: 3.5rem;
+}
+
+.subtitle {
+  color: var(--primary);
+  font-family: var(--upscale-font);
+  font-weight: 600;
+  font-size: 1.17rem;
 }
